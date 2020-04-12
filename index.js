@@ -135,10 +135,10 @@ class DSUServer {
                 reference.server.send(reference.prepareReply(buffer.pack("<IH", [reference.DSUVersion, reference.DSUProtocolVersion])), client.port, client.address)
                 break;
             case reference.DSUPorts:
-                var expectedControllers = bufferpack.unpack('<1I', message.buffer, 20)[0];
+                var requestedControllers = bufferpack.unpack('<1I', message.buffer, 20)[0];
                 var controllers = [];
-                for (var i = 0; i < 4; i++) {
-                    if (expectedControllers > i && message.buffer.length > (24 + i)) {
+                for (var i = 0; i < reference.controllers.length; i++) {
+                    if (requestedControllers > i && message.buffer.length > (24 + i)) {
                         controllers.push(bufferpack.unpack('<1B', message.buffer, (24 + i))[0])
                     }
                 }
@@ -152,6 +152,12 @@ class DSUServer {
                             timestamp: Date.now()
                         });
                         reference.controllers.push(controller)
+                    } else {
+                        controller.clients.push({
+                            address: client.address,
+                            port: client.port,
+                            timestamp: Date.now()
+                        });
                     }
 
                     var reply = reference.prepareReply(bufferpack.pack("<I4B6s2B", [
@@ -195,6 +201,17 @@ class DSUServer {
         controller.clients.filter(x => Date.now() - x.timestamp > this.disconnectionTimeout).forEach(x => {
             controller.clients.splice(controller.clients.indexOf(x), 1);
         });
+    }
+
+    removeController(controller) {
+        if(typeof controller === 'number') {
+            controller = controllers[i];
+        }
+
+        controller.clients.forEach(x => {
+            controller.clients.splice(controller.clients.indexOf(x), 1);
+        });
+        controllers.splice(controllers.indexOf(controller), 1);
     }
 
     prepareReply(body) {
@@ -312,14 +329,19 @@ class DSUServer {
         }
     }
 
+
+
     start() {
         var reference = this;
         this.controllers = [];
+        for(var i=0; i < 4; i++) {
+            this.controllers.push(this.createController(i))
+        }
         this.name = "DSUS";
         this.DSUVersion = 0x100000;
         this.DSUPorts = 0x100001;
         this.DSUPadData = 0x100002;
-        this.DSUProtocolVersion = 1001
+        this.DSUProtocolVersion = 1001;
 
         this.id = Math.random() * 0xFFFFFFFF;
         this.server = dgram.createSocket("udp4");

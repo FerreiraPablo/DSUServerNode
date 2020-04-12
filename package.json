@@ -28,7 +28,6 @@
   "homepage": "https://github.com/FerreiraPablo/DSUServerNode#readme",
   "dependencies": {
     "buffer-crc32": "^0.2.13",
-    "bufferpack": "0.0.6",
-    "dgram": "^1.0.1"
+    "bufferpack": "0.0.6"
   }
 }
