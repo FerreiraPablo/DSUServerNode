@@ -1,0 +1,34 @@
+{
+  "name": "node-dsu-server",
+  "version": "1.0.0",
+  "description": "DSU Server, for simulating DS Controller input for any kind of DSUClient using Javascript. Read more https://v1993.github.io/cemuhook-protocol/ ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FerreiraPablo/DSUServerNode.git"
+  },
+  "keywords": [
+    "CEMU",
+    "DSU",
+    "CEMUHOOK",
+    "DOLPHIN",
+    "DUALSHOCK",
+    "DS4",
+    "DS3",
+    "JOYSTICK"
+  ],
+  "author": "Pablo Ferreira",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/FerreiraPablo/DSUServerNode/issues"
+  },
+  "homepage": "https://github.com/FerreiraPablo/DSUServerNode#readme",
+  "dependencies": {
+    "buffer-crc32": "^0.2.13",
+    "bufferpack": "0.0.6",
+    "dgram": "^1.0.1"
+  }
+}
