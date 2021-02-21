@@ -4,7 +4,7 @@ DSU Server, for simulating DualShock Controller input for any kind of DSUClient 
 
 ## Installation
 
-Use NPM to install foobar.
+Use NPM to install node-dsu-server.
 
 ```bash
 npm install https://github.com/FerreiraPablo/DSUServerNode
@@ -18,7 +18,7 @@ Read more https://v1993.github.io/cemuhook-protocol/
 
 Example : 
 ```js
-var DSUServer = require("./index.js");
+const DSUServer = require("node-dsu-server");
 var server = new DSUServer();
 var drawingInterval = setInterval(function() {
     server.controllers.forEach(controller => {
